@@ -7,7 +7,10 @@ import {
 } from "react-router-dom";
 
 import BlogLayout from "./pages/BlogLayout";
-import BlogPostsPage, { loader as blogPostsLoader } from "./pages/BlogPosts";
+// import BlogPostsPage, { loader as blogPostsLoader } from "./pages/BlogPosts";
+import DeferredBlogPostsPage, {
+  loader as deferredBlogPostsLoader,
+} from "./pages/DeferredBlogPosts";
 import ErrorPage from "./pages/Error";
 import NewPostPage, { action as newPostAction } from "./pages/NewPost";
 import PostDetailPage, { loader as blogPostLoader } from "./pages/PostDetail";
@@ -19,7 +22,12 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
       <Route index element={<WelcomePage />} />
       <Route path="/blog" element={<BlogLayout />}>
-        <Route index element={<BlogPostsPage />} loader={blogPostsLoader} />
+        {/* <Route index element={<BlogPostsPage />} loader={blogPostsLoader} /> */}
+        <Route
+          index
+          element={<DeferredBlogPostsPage />}
+          loader={deferredBlogPostsLoader}
+        />
         <Route
           path=":id"
           element={<PostDetailPage />}
