@@ -1,13 +1,20 @@
 // import { useState } from 'react';
-import { redirect, useNavigate } from "react-router-dom";
+import {
+  redirect,
+  useActionData,
+  useNavigate,
+  useNavigation,
+} from "react-router-dom";
 
 import NewPostForm from "../components/NewPostForm";
 import { savePost } from "../util/api";
 
 function NewPostPage() {
+  const data = useActionData();
   // const [isSubmitting, setIsSubmitting] = useState(false);
   // const [error, setError] = useState();
   const navigate = useNavigate();
+  const navigation = useNavigation();
 
   // async function submitHandler(event) {
   //   event.preventDefault();
@@ -32,10 +39,11 @@ function NewPostPage() {
 
   return (
     <>
+      {data && data.status && <p>{data.message}</p>}
       <NewPostForm
         onCancel={cancelHandler}
         // onSubmit={submitHandler}
-        submitting={false}
+        submitting={navigation.state === "submitting"}
       />
     </>
   );
@@ -54,7 +62,7 @@ export async function action({ request }) {
     await savePost(post);
   } catch (err) {
     if (err.status === 422) {
-      throw err;
+      return err;
     }
     throw err;
   }
