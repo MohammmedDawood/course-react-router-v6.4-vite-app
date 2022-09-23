@@ -14,6 +14,7 @@ function BlogPostsPage() {
 
 export default BlogPostsPage;
 
-export function loader() {
+export function loader(LoaderObj) {
+  console.log("LoaderObj", LoaderObj);
   return getPosts();
 }
